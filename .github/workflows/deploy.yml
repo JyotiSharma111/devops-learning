@@ -1,4 +1,4 @@
-name:Build and deploy
+name: Build and deploy
 
 on:
   push:
@@ -17,7 +17,9 @@ jobs:
         run: |
           cd day3-docker-compose/backend
           docker build -t my-backend .
+
       - name: Build frontend Docker image
         run: |
           cd day3-docker-compose/frontend
           docker build -t my-frontend .
+
