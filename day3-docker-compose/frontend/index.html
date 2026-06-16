@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Docker Compose Demo</title>
+</head>
+<body>
+  <h1>Frontend Container</h1>
+  <p id="status">Checking backend...</p>
+
+  <script>
+    fetch('http://' + window.location.hostname + ':4000/api/health')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('status').innerText = 'Backend says: ' + data.message;
+      })
+      .catch(err => {
+        document.getElementById('status').innerText = 'Backend not reachable: ' + err;
+      });
+  </script>
+</body>
+</html>

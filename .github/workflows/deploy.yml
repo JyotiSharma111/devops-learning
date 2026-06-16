@@ -1,0 +1,23 @@
+name:Build and deploy
+
+on:
+  push:
+      branches:
+        - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build backend Docker image
+        run: |
+          cd day3-docker-compose/backend
+          docker build -t my-backend .
+      - name: Build frontend Docker image
+        run: |
+          cd day3-docker-compose/frontend
+          docker build -t my-frontend .
