@@ -22,6 +22,7 @@ jobs:
           cd day3-docker-compose/frontend
           docker build -t my-frontend .
 
+
   deploy:
     runs-on: ubuntu-latest
     needs: build
@@ -35,6 +36,17 @@ jobs:
           echo "${{ secrets.EC2_SSH_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Debug SSH key
+        run: |
+          echo "Key first line:"
+          head -1 ~/.ssh/id_rsa
+          echo "Key last line:"
+          tail -1 ~/.ssh/id_rsa
+          echo "Line count:"
+          wc -l ~/.ssh/id_rsa
+          echo "File permissions:"
+          ls -la ~/.ssh/id_rsa
 
       - name: Deploy to EC2
         run: |
