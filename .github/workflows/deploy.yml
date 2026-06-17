@@ -37,16 +37,14 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Debug SSH key
+      - name: Setup SSH key
+        env:
+          SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
         run: |
-          echo "Key first line:"
-          head -1 ~/.ssh/id_rsa
-          echo "Key last line:"
-          tail -1 ~/.ssh/id_rsa
-          echo "Line count:"
-          wc -l ~/.ssh/id_rsa
-          echo "File permissions:"
-          ls -la ~/.ssh/id_rsa
+          mkdir -p ~/.ssh
+          printf '%s' "$SSH_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
 
       - name: Deploy to EC2
         run: |
