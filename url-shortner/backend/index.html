@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 100px auto;
+            padding: 0 20px;
+            background: #f5f5f5;
+        }
+        h1 { color: #333; }
+        input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px 0;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover { background: #0056b3; }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 4px;
+            display: none;
+        }
+        a { color: #007bff; }
+    </style>
+</head>
+<body>
+    <h1>URL Shortener</h1>
+    <input type="text" id="urlInput" placeholder="Enter a long URL..." />
+    <button onclick="shortenUrl()">Shorten</button>
+    <div id="result">
+        <p>Short URL: <a id="shortLink" href="#" target="_blank"></a></p>
+    </div>
+
+    <script>
+        async function shortenUrl() {
+            const url = document.getElementById('urlInput').value;
+            const response = await fetch('http://localhost:4000/shorten', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ url })
+            });
+            const data = await response.json();
+            document.getElementById('shortLink').href = data.shortUrl;
+            document.getElementById('shortLink').textContent = data.shortUrl;
+            document.getElementById('result').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
