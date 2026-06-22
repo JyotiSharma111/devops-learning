@@ -8,11 +8,16 @@ app.use(express.json());
 
 const urls = {};
 
+
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok', uptime: process.uptime() });
+});
+
 app.post('/shorten', (req, res) => {
   const { url } = req.body;
   const id = nanoid(6);
   urls[id] = url;
-  res.json({ shortUrl: `http://localhost:4000/${id}` });
+  res.json({ shortUrl: `http://100.51.62.42:4000/${id}` });
 });
 
 app.get('/:id', (req, res) => {
@@ -23,5 +28,6 @@ app.get('/:id', (req, res) => {
     res.status(404).json({ error: 'URL not found' });
   }
 });
+
 
 app.listen(4000, () => console.log('Backend running on port 4000'));

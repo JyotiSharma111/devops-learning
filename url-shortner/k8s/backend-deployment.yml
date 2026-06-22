@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: url-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: url-backend
+  template:
+    metadata:
+      labels:
+        app: url-backend
+    spec:
+      containers:
+      - name: url-backend
+        image: minikanva/url-backend:v2
+        ports:
+        - containerPort: 4000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: url-backend
+spec:
+  selector:
+    app: url-backend
+  ports:
+  - port: 4000
+    targetPort: 4000

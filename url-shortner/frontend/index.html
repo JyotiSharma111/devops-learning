@@ -51,7 +51,7 @@
     <script>
         async function shortenUrl() {
             const url = document.getElementById('urlInput').value;
-            const response = await fetch('http://100.51.62.42:4000/shorten', {
+            const response = await fetch('/api/shorten', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ url })
