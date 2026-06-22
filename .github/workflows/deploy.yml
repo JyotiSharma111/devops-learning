@@ -39,7 +39,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            docker stop url-backend url-frontend 2>/dev/null || true
+            cd ~/devops-learning/day3-docker-compose && docker-compose down 2>/dev/null || true
             cd ~/devops-learning/url-shortner
             docker-compose pull
             docker-compose up -d
