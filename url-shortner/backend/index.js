@@ -17,7 +17,8 @@ app.post('/shorten', (req, res) => {
   const { url } = req.body;
   const id = nanoid(6);
   urls[id] = url;
-  res.json({ shortUrl: `http://100.51.62.42:4000/${id}` });
+  const host = req.headers['x-forwarded-host'] || req.headers.host || 'localhost:4000';
+res.json({ shortUrl: `http://${host}/${id}` });
 });
 
 app.get('/:id', (req, res) => {
